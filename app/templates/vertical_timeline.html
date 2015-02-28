@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block custom_header_files %}
+<link href="static/vertical_timeline.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+
+<section id="timeline" class="container">
+	{% for direction in schedule.recipes[0].directions %}
+	<div class="timeline-block">
+		<div class="timeline-img">
+			<img src="http://codyhouse.co/demo/vertical-timeline/img/cd-icon-picture.svg">
+		</div>
+		<div class="timeline-content">
+			<p>{{ direction.text }}</p>
+		</div>
+	</div>
+	{% endfor %}
+</section>
+
+
+{% endblock %}

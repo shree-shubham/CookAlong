@@ -6,11 +6,15 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/base.css" rel="stylesheet" type="text/css" />
     {% block custom_header_files %}{% endblock %}
     
 </head>
 <body>
 	<div class="container">
+		<div class="page-header col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
+		  <h1 style="text-align: center">Cook Along <small>Super Optimized Cooking</small></h1>
+		</div>
         {% block content %}{% endblock %}
     </div>
 </body>

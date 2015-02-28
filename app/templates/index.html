@@ -5,29 +5,64 @@
 {% endblock %}
 
 {% block content %}
-
-    <div class="col-md-8 col-md-offset-2">
-        <form action="" method="post" name="RecipeInputForm" width="100%">
-            {{ form.hidden_tag() }}
-            <p>
-                Recipe 1: <br>
-                {{ form.recipe_1 }}<br>
-            </p>
-            <p>
-                {{ form.recipe_2 }}<br>
-            </p>
-            <p>
-                {{ form.stoves }}<br>
-            </p>
-            <p>
-                {{ form.ovens }}<br>
-            </p>
-            <p>
-                {{ form.finish_time }}<br>
-            </p>
-            <p>
-                <input type="submit" value="go">
-            </p>
+    <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+        <form class="form-horizontal" action="" method="post" name="RecipeInputForm">
+          {{ form.hidden_tag() }}
+          <div class="form-group">
+            <label for="recipe_1" class="col-sm-2 control-label">Recipe URL:</label>
+            <div class="col-sm-10">
+              {{ form.recipe_1 }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="recipe_2" class="col-sm-2 control-label">Recipe URL:</label>
+            <div class="col-sm-10">
+              {{ form.recipe_2 }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="recipe_3" class="col-sm-2 control-label">Recipe URL:</label>
+            <div class="col-sm-10">
+              {{ form.recipe_3 }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="recipe_4" class="col-sm-2 control-label">Recipe URL:</label>
+            <div class="col-sm-10">
+              {{ form.recipe_4 }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="stoves" class="col-sm-2 control-label">Stoves:</label>
+            <div class="col-sm-4">
+              {{ form.stoves }}
+            </div>
+            <label for="stoves" class="col-sm-2 control-label">Ovens:</label>
+            <div class="col-sm-4">
+              {{ form.ovens }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="finish_time" class="col-sm-2 control-label">Dinner Time:</label>
+            <div class="col-sm-10">
+              {{ form.finish_time }}
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default">Go</button>
+            </div>
+          </div>
         </form>
     </div>
 
