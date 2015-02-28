@@ -1,23 +1,34 @@
 {% extends "base.html" %}
+
+{% block custom_header_files %}
+<link href="static/index.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
 {% block content %}
-<form action="" method="post" name="RecipeInputForm">
-{{ form.hidden_tag() }}
-<p>
-	Recipe 1: <br>
-	{{ form.recipe_1(size=150) }}<br>
-</p>
-<p>
-	{{ form.recipe_2(size=150) }}<br>
-</p>
-<p>
-	{{ form.stoves }}<br>
-</p>
-<p>
-	{{ form.ovens }}<br>
-</p>
-<p>
-	{{ form.finish_time }}<br>
-</p>
-<p><input type="submit" value="go"></p>
-</form>
+
+    <div class="col-md-8 col-md-offset-2">
+        <form action="" method="post" name="RecipeInputForm" width="100%">
+            {{ form.hidden_tag() }}
+            <p>
+                Recipe 1: <br>
+                {{ form.recipe_1 }}<br>
+            </p>
+            <p>
+                {{ form.recipe_2 }}<br>
+            </p>
+            <p>
+                {{ form.stoves }}<br>
+            </p>
+            <p>
+                {{ form.ovens }}<br>
+            </p>
+            <p>
+                {{ form.finish_time }}<br>
+            </p>
+            <p>
+                <input type="submit" value="go">
+            </p>
+        </form>
+    </div>
+
 {% endblock %}
