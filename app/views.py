@@ -7,9 +7,10 @@ from .forms import RecipeInputForm
 def index():
 	form = RecipeInputForm()
 	if form.validate_on_submit():
-		#get rID from recipes
+		# get rID from recipes
 		rID_1 = 'recipetest1'
 		rID_2 = 'recipetest2'
+		# get directions
 		return redirect('/vertical_timeline/%s/%s' % (rID_1, rID_2))
 	else:
 		print "error"
