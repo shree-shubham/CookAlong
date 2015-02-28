@@ -1,4 +1,4 @@
-BeautifulSoup==3.2.1
+beautifulsoup4==4.3.2
 blinker==1.3
 decorator==3.4.0
 Flask==0.10.1
@@ -16,6 +16,7 @@ SQLAlchemy==0.9.8
 sqlalchemy-migrate==0.9.5
 sqlparse==0.1.14
 Tempita==0.5.2
+urllib3==1.10.2
 Werkzeug==0.10.1
 Whoosh==2.6.0
 WTForms==2.0.2
