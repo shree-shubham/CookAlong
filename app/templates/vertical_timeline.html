@@ -38,7 +38,10 @@
 
           ]);
         var options = {
-          timeline: {colorByRowLabel:true, showRowLabels: true },
+          timeline: {colorByRowLabel:false,
+            showRowLabels: true,
+            showBarLabels: false},
+          avoidOverlappingGridLines: false
         };
         chart.draw(dataTable, options);
       }
