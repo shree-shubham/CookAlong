@@ -4,9 +4,9 @@ from wtforms.validators import DataRequired, Optional
 
 class RecipeInputForm(Form):
 	recipe_1 = StringField('recipe_1', validators=[DataRequired()])
-	recipe_2 = StringField('recipe_2', validators=[Optional()])
+	recipe_2 = StringField('recipe_2', validators=[DataRequired()])
 	recipe_3 = StringField('recipe_3', validators=[Optional()])
-	recipe_4 = StringField('recipe_3', validators=[Optional()])
-	stoves = IntegerField('stoves', validators=[Optional()])
-	ovens = IntegerField('ovens', validators=[Optional()])
+	recipe_4 = StringField('recipe_4', validators=[Optional()])
+	stoves_numb = IntegerField('stoves_numb', validators=[Optional()])
+	ovens_numb = IntegerField('ovens_numb', validators=[Optional()])
 	finish_time = DateTimeField('finish_time', validators=[Optional()])
