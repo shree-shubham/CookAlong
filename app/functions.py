@@ -3,12 +3,16 @@ from bs4 import BeautifulSoup
 import string
 
 def get_rID(url):
+    original_url = url
 	url = url.lower()
 	start_index = url.find('allrecipes.com/recipe')
-	rID = url[start_index + len('allrecipes.com/recipe') + 1:]
+	rID = original_url[start_index + len('allrecipes.com/recipe') + 1:]
 	end_index = rID.find('/')
 	if end_index != -1:
 		rID = rID[:end_index]
+    while rID.find('-'):
+        index = rID.find('-')
+        rID = rID[:index] + ' ' + rID[index+1:]
 	return rID
 
 def get_soup(url):
