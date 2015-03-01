@@ -102,7 +102,7 @@ class Schedule():
 		else:
 			end_time = 0
 		if recipe.last_unscheduled():
-			if recipe.last_unscheduled().stove:
+			if recipe.last_unscheduled().stove and len(self.recipes)>self.stoves:
 				last_stove_times = []
 				for neighbor in self.recipes:
 					if neighbor != recipe:
@@ -110,9 +110,9 @@ class Schedule():
 				last_stove_times.sort()
 				try:
 					end_time = min(end_time, last_stove_times[self.stoves - 1])
-				except KeyError:
+				except KeyError, IndexError:
 					pass
-			if recipe.last_unscheduled().oven:
+			if recipe.last_unscheduled().oven and len(self.recipes)>self.ovens:
 				last_oven_times = []
 				for neighbor in self.recipes:
 					if neighbor != recipe:
@@ -120,7 +120,7 @@ class Schedule():
 				last_oven_times.sort()
 				try:
 					end_time = min(end_time, last_oven_times[self.ovens - 1])
-				except KeyError:
+				except KeyError, IndexError:
 					pass
 			recipe.last_unscheduled().set_end_time(end_time)
 	def unoptimized_recipes(self):
@@ -195,10 +195,5 @@ class ScheduleCreator():
 		self.S.optimize()
 		# self.S.export()
 
-C = ScheduleCreator()
-C.create_schedule(1,1,'http://allrecipes.com/Recipe/Chef-Johns-Chicken-Teriyaki/Detail.aspx?evt19=1&referringHubId=1','http://allrecipes.com/Recipe/Steak-Soup/Detail.aspx?event8=1&prop24=SR_Thumb&e11=steak&e8=Quick%20Search&event10=1&e7=Recipe&soid=sr_results_p1i2',"http://allrecipes.com/Recipe/Pork-Medallions-with-Balsamic-Vinegar-and-Capers/Detail.aspx?evt19=1&referringHubId=1")
-
-
-
-
-
+# C = ScheduleCreator()
+# C.create_schedule(2,1,'http://allrecipes.com/Recipe/Steak-Soup/Detail.aspx?event8=1&prop24=SR_Thumb&e11=steak&e8=Quick%20Search&event10=1&e7=Recipe&soid=sr_results_p1i2',"http://allrecipes.com/Recipe/Pork-Medallions-with-Balsamic-Vinegar-and-Capers/Detail.aspx?evt19=1&referringHubId=1")
