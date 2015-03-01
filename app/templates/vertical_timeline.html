@@ -33,15 +33,19 @@
                 new Date({{ direction.end }})],
             {% endfor %}
           {% endfor %}
-
-
-
           ]);
         var options = {
+          fontName: 'Arial',
           timeline: {colorByRowLabel:false,
             showRowLabels: true,
-            showBarLabels: false},
-          avoidOverlappingGridLines: false
+            showBarLabels: false,
+          },
+          avoidOverlappingGridLines: false,
+          tooltip: {
+            textStyle: {
+              fontName: 'Arial'
+            }
+          }
         };
         chart.draw(dataTable, options);
       }

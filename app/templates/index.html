@@ -10,7 +10,7 @@
           <div class="form-group">
             <label for="recipe" class="col-sm-2 control-label">Recipe URL:</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control recipeUrlInput" name="recipe">
+              <input type="text" class="form-control recipeUrlInput" name="recipe" placeholder="allrecipes.com recipes only, please">
             </div>
           </div>
           <div class="form-group" id="button-div">
@@ -49,7 +49,7 @@
 {% block custom_footer_files %}
 <script>
 $('#add_row_button').click(function(){
-  html_to_add = '<div class="form-group"><label for="recipe" class="col-sm-2 control-label">Recipe URL:</label><div class="col-xs-10 col-sm-8"><input type="text" class="form-control recipeUrlInput" name="recipe"/></div><div class="col-xs-2"><button type="button" class="btn btn-default col-sm-12 delete_row_button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></div></div>';
+  html_to_add = '<div class="form-group"><label for="recipe" class="col-sm-2 control-label">Recipe URL:</label><div class="col-xs-10 col-sm-8"><input type="text" class="form-control recipeUrlInput" name="recipe" placeholder="allrecipes.com recipes only, please"/></div><div class="col-xs-2"><button type="button" class="btn btn-default col-sm-12 delete_row_button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></div></div>';
   $(html_to_add).insertBefore($('#button-div'));
   $('.delete_row_button').click(function(){
     $('.form-group').has($(this)).remove();
