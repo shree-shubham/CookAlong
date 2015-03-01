@@ -2,6 +2,18 @@
 
 {% block custom_header_files %}
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1" id="timeline">  
+    <div style="width: 100%">
+        <div></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block custom_footer_files %}
 <script type="text/javascript">
       google.load("visualization", "1", {packages:["timeline"]});
       google.setOnLoadCallback(drawChart);
@@ -11,32 +23,26 @@
         var chart = new google.visualization.Timeline(container);
         var dataTable = new google.visualization.DataTable();
 
-        dataTable.addColumn({ type: 'string', id: 'President' });
+        dataTable.addColumn({ type: 'string', id: 'Recipe' });
+        dataTable.addColumn({ type: 'string', id: 'Direction' });
         dataTable.addColumn({ type: 'date', id: 'Start' });
         dataTable.addColumn({ type: 'date', id: 'End' });
         dataTable.addRows([
-          [ 'Recipe 1', new Date(1789, 3, 29), new Date(1797, 2, 3) ],
-          [ 'Recipe 2', new Date(1797, 2, 3),  new Date(1801, 2, 3) ],
-          [ 'Recipe 3', new Date(1801, 2, 3),  new Date(1809, 2, 3) ]]);
+          {% for recipe in timeline.recipes %}
+            {% for direction in recipe.directions %}
+              [ "{{ recipe.rID }}", "{{ direction.text }}", new Date({{ direction.start }}),
+                new Date({{ direction.end }})],
+            {% endfor %}
+          {% endfor %}
 
-        chart.draw(dataTable);
+
+
+          ]);
+        var options = {
+          timeline: { showRowLabels: true },
+          avoidOverlappingGridLines: true
+        };
+        chart.draw(dataTable, options);
       }
     </script>
-{% endblock %}
-
-{% block content %}
-
-<div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">  
-    <div style="width: 100%">
-        <div>{{diction}}</div>
-    </div>
-</div>
-
-
-
-<div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">  
-    <div style="width: 100%">
-        <div>{{diction[2]}}</div>
-    </div>    
-</div>
 {% endblock %}
