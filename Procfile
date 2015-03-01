@@ -1,1 +1,1 @@
-web: gunicorn CookAlong:app --log-file=-
+web: gunicorn app:app
