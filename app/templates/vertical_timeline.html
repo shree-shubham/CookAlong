@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block custom_header_files %}
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
+       'version':'1','packages':['timeline']}]}"></script>
 {% endblock %}
+{% block content_outside %}
 
-{% block content %}
-
-<div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1" id="timeline">  
-    <div style="width: 100%">
+<div class="col-md-12" id="timeline">  
+    <div>
         <div></div>
     </div>
 </div>
@@ -15,7 +15,6 @@
 
 {% block custom_footer_files %}
 <script type="text/javascript">
-      google.load("visualization", "1", {packages:["timeline"]});
       google.setOnLoadCallback(drawChart);
 
       function drawChart() {
@@ -39,8 +38,7 @@
 
           ]);
         var options = {
-          timeline: { showRowLabels: true },
-          avoidOverlappingGridLines: true
+          timeline: {colorByRowLabel:true, showRowLabels: true },
         };
         chart.draw(dataTable, options);
       }

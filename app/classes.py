@@ -96,7 +96,6 @@ class Schedule():
 		self.stoves = dictionary['stoves']
 		self.ovens = dictionary['ovens']
 	def push_down(self,recipe):
-		print "push_down"
 		if recipe.first_scheduled():
 			end_time = recipe.first_scheduled().start
 		else:
@@ -193,7 +192,3 @@ class ScheduleCreator():
 				)
 		self.S = Schedule(dictionary)
 		self.S.optimize()
-		# self.S.export()
-
-C = ScheduleCreator()
-C.create_schedule(2,1,'http://allrecipes.com/Recipe/Steak-Soup/Detail.aspx?event8=1&prop24=SR_Thumb&e11=steak&e8=Quick%20Search&event10=1&e7=Recipe&soid=sr_results_p1i2',"http://allrecipes.com/Recipe/Pork-Medallions-with-Balsamic-Vinegar-and-Capers/Detail.aspx?evt19=1&referringHubId=1")

@@ -6,56 +6,34 @@
 
 {% block content %}
     <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          {% for message in messages %}
-            <div class="alert alert-warning alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              {{ message }}
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
-        <form class="form-horizontal" action="" method="post" name="RecipeInputForm">
-          {{ form.hidden_tag() }}
+        <form class="form-horizontal" action="{{ url_for('timeline') }}" method="post" name="RecipeInputForm">
           <div class="form-group">
-            <label for="recipe_1" class="col-sm-2 control-label">Recipe URL:</label>
+            <label for="recipe" class="col-sm-2 control-label">Recipe URL:</label>
             <div class="col-sm-10">
-              {{ form.recipe_1 }}
+              <input type="text" class="form-control recipeUrlInput" name="recipe">
             </div>
           </div>
-          <div class="form-group">
-            <label for="recipe_2" class="col-sm-2 control-label">Recipe URL:</label>
-            <div class="col-sm-10">
-              {{ form.recipe_2 }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="recipe_3" class="col-sm-2 control-label">Recipe URL:</label>
-            <div class="col-sm-10">
-              {{ form.recipe_3 }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="recipe_4" class="col-sm-2 control-label">Recipe URL:</label>
-            <div class="col-sm-10">
-              {{ form.recipe_4 }}
+          <div class="form-group" id="button-div">
+            <div class="col-sm-10 col-sm-offset-2">
+              <button type="button" class="btn btn-default col-xs-12" id="add_row_button">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+              </button>
             </div>
           </div>
           <div class="form-group">
             <label for="stoves" class="col-sm-2 control-label">Stoves:</label>
             <div class="col-sm-4">
-            {{ form.stoves_numb }}
+              <input type="number" class="form-control" name="stove_number">
             </div>
             <label for="stoves" class="col-sm-2 control-label">Ovens:</label>
             <div class="col-sm-4">
-              {{ form.ovens_numb }}
+              <input type="number" class="form-control" name="oven_number">
             </div>
           </div>
           <div class="form-group">
             <label for="finish_time" class="col-sm-2 control-label">Dinner Time:</label>
             <div class="col-sm-10">
-              {{ form.finish_time }}
+              <input type="datetime-local" class="form-control" name="finish_time">
             </div>
           </div>
           <div class="form-group">
@@ -66,4 +44,16 @@
         </form>
     </div>
 
+{% endblock %}
+
+{% block custom_footer_files %}
+<script>
+$('#add_row_button').click(function(){
+  html_to_add = '<div class="form-group"><label for="recipe" class="col-sm-2 control-label">Recipe URL:</label><div class="col-xs-10 col-sm-8"><input type="text" class="form-control recipeUrlInput" name="recipe"/></div><div class="col-xs-2"><button type="button" class="btn btn-default col-sm-12 delete_row_button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></div></div>';
+  $(html_to_add).insertBefore($('#button-div'));
+  $('.delete_row_button').click(function(){
+    $('.form-group').has($(this)).remove();
+  })
+})
+</script>
 {% endblock %}

@@ -14,7 +14,6 @@ def get_rID(url):
     while rID.find('-')!=-1:
         index = rID.find('-')
         rID = rID[:index] + ' ' + rID[index+1:]
-    print rID
     return rID
 
 def get_soup(url):
