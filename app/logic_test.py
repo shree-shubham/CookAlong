@@ -80,29 +80,49 @@ def get_stove(direction):
 	return False
 
 class Direction():
-	def __init__(self,text,time,oven,stove):
-		self.text = text
-		self.time = time
-		self.oven = oven
-		self.stove = stove
-		self.start = 0
-		self.end = 0
-		self.scheduled = False
+	def __init__(self,dictionary):
+		self.text = dictionary['text']
+		self.time = dictionary['time']
+		self.oven = dictionary['oven']
+		self.stove = dictionary['stove']
+		self.start = dictionary['start']
+		self.end = dictionary['end']
+		self.scheduled = dictionary['scheduled']
 	def set_end_time(self, end_time):
 		self.end = end_time
 		self.start = self.end - self.time
 		self.scheduled = True
 	def __str__(self):
 		return 'start: ' + str(self.start) + ' end: ' + str(self.end)
+	def dict(self):
+		dictionary = {
+			'text': self.text,
+			'time': self.time,
+			'oven': self.oven,
+			'stove': self.stove,
+			'start': self.start,
+			'end': self.end,
+			'scheduled': self.scheduled
+		}
+		return dictionary
+
+class DirectionHelper():
+	def create_direction(self,text,time,oven,stove):
+		dictionary = {}
+		dictionary['text'] = text
+		dictionary['time'] = time
+		dictionary['oven'] = oven
+		dictionary['stove'] = stove
+		dictionary['start'] = 0
+		dictionary['end'] = 0
+		dictionary['scheduled'] = False
+		self.direction = Direction(dictionary)
+		return self
 
 class Recipe():
-	def __init__(self, url):
-		self.rID = get_rID(url)
-		directions = get_directions(self.rID)
-		self.directions = []
-		for direction in directions:
-			self.directions.append(Direction(direction,get_time(direction),
-				get_oven(direction),get_stove(direction)))
+	def __init__(self, dictionary):
+		self.rID = dictionary['rID']
+		directions = dictionary['directions']
 	def earliest_stove(self):
 		return_time = 0
 		for direction in self.directions:
@@ -127,14 +147,30 @@ class Recipe():
 		return None
 	def __str__(self):
 		return self.rID + ' '.join([str(direction) for direction in self.directions])
+	def dict(self):
+		dictionary = {
+			'rID': self.rID,
+			'directions': [direction.dict() for direction in self.directions],
+		}
+		return dictionary	
+
+class RecipeHelper():
+	def create_recipe(self, url):
+		dictionary = {}
+		dictionary['rID'] = get_rID(url)
+		directions = get_directions(dictionary['rID'])
+		dictionary['directions'] = []
+		for direct in directions:
+			dictionary['directions'].append(DirectionHelper().create_direction(direct,get_time(direct),
+				get_oven(direct),get_stove(direct)).direction)
+		self.recipe = Recipe(dictionary)
+		return self
 
 class Schedule():
-	def __init__(self, stoves, ovens, *argv):
-		self.recipes = []
-		self.stoves = stoves
-		self.ovens = ovens
-		for url in argv:
-			self.recipes.append(Recipe(url))
+	def __init__(self, dictionary):
+		self.recipes = dictionary['recipes']
+		self.stoves = dictionary['stoves']
+		self.ovens = dictionary['ovens']
 		self.optimize()
 	def push_down(self,recipe):
 		if recipe.first_scheduled():
@@ -198,26 +234,53 @@ class Schedule():
 			else: #conflict
 				min_time = str("inf")
 				for recipe in self.conflict(self.unoptimized_recipes()):
-					A = copy.copy(self)
+					A_dictionary = copy.copy({
+						'stoves': self.stoves,
+						'ovens': self.ovens,
+						'recipes': self.recipes,
+						})
+					A = Schedule(A_dictionary)
 					A.push_down(recipe)
 					A.optimize()
 					if A.total_time < min_time:
-						Best = copy.copy(A)
+						Best = copy.copy({
+						'stoves': A.stoves,
+						'ovens': A.ovens,
+						'recipes': A.recipes,
+						})
 						min_time = A.total_time()
-				self = copy.copy(A)
+				self = copy.copy(Schedule(Best))
 				break
+	def dict(self):
+		dictionary = {
+			'stoves': self.stoves,
+			'ovens': self.ovens,
+			'recipes': [recipe.dict() for recipe in recipes],
+		}
+		return dictionary
+
 	def __repr__(self):
 		return "Schedule()"
 	def __str__(self):
 		return ' '.join([str(recipe) for recipe in self.recipes])
 
-				
+class ScheduleHelper():
+	def create_schedule(self, stoves, ovens, *argv):
+		dictionary = {}
+		dictionary['stoves'] = stoves
+		dictionary['ovens'] = ovens
+		dictionary['recipes'] = []
+		for url in argv:
+			dictionary['recipes'].append(RecipeHelper().create_recipe(url).recipe)
+		print dictionary
+		self.schedule = Schedule(dictionary)
 
 ###
 # Testing
 ###
 
-A = Schedule(1,1,'http://allrecipes.com/Recipe/Easy-Chicken-Pasta/Detail.aspx?prop24=RD_RelatedRecipes','http://allrecipes.com/Recipe/Steak-Soup/Detail.aspx?event8=1&prop24=SR_Thumb&e11=steak&e8=Quick%20Search&event10=1&e7=Recipe&soid=sr_results_p1i2')
+A = ScheduleHelper()
+A.create_schedule(1,1,'http://allrecipes.com/Recipe/Easy-Chicken-Pasta/Detail.aspx?prop24=RD_RelatedRecipes','http://allrecipes.com/Recipe/Steak-Soup/Detail.aspx?event8=1&prop24=SR_Thumb&e11=steak&e8=Quick%20Search&event10=1&e7=Recipe&soid=sr_results_p1i2')
 
 
 
